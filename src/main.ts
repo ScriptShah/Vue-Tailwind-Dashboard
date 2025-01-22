@@ -10,7 +10,7 @@ import fa from './locale/fa.json';
 import { createPinia } from 'pinia'
 import VueApexCharts from 'vue3-apexcharts'
 
-import App from './App.vue'
+import Dashboard from './Dashboard.vue'
 import router from './router'
 
 // Set up i18n with FR as the default locale
@@ -22,7 +22,7 @@ const i18n = createI18n({
     },
 })
 
-const app = createApp(App)
+const app = createApp(Dashboard)
 
 // Watch for changes in the locale and update the document direction dynamically
 watch(
