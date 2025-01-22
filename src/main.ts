@@ -2,10 +2,10 @@ import './assets/css/satoshi.css'
 import './assets/css/style.css'
 import 'jsvectormap/dist/css/jsvectormap.min.css'
 import 'flatpickr/dist/flatpickr.min.css'
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
 import { createI18n } from 'vue-i18n'
-import EN from './locale/en.json';
-import FR from './locale/fr.json';
+import en from './locale/en.json';
+import fa from './locale/fa.json';
 
 import { createPinia } from 'pinia'
 import VueApexCharts from 'vue3-apexcharts'
@@ -13,15 +13,33 @@ import VueApexCharts from 'vue3-apexcharts'
 import App from './App.vue'
 import router from './router'
 
+// Set up i18n with FR as the default locale
 const i18n = createI18n({
-    locale: 'FR',
+    locale: 'EN',
     messages: {
-        EN:EN,
-        FR:FR,
-    }
+        EN: en,
+        FA: fa,
+    },
 })
 
 const app = createApp(App)
+
+// Watch for changes in the locale and update the document direction dynamically
+watch(
+    () => i18n.global.locale,
+    (newLocale: string) => {
+        const direction = newLocale === 'FA' ? 'rtl' : null; // Set to 'rtl' only for 'FA'
+        const newDirection = newLocale !== 'FA' ? 'ltr' : null; // Set to 'ltr' for others
+
+        // Use a fallback value to avoid passing null
+        document.documentElement.setAttribute('dir', direction || newDirection || 'ltr');
+    }
+);
+
+
+
+// Set the initial document direction
+document.documentElement.setAttribute('dir', i18n.global.locale === 'FA' ? 'rtl' : 'ltr');
 
 app.use(createPinia())
 app.use(router)
