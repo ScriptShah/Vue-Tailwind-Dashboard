@@ -23,7 +23,7 @@ const cardItems = ref([
             fill=""
           />
         </svg>`,
-        title:  t('Total views'),
+    title: t('Total views'),
     total: '$3.456K',
     growthRate: 0.43
   },
